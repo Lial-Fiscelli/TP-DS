@@ -17,7 +17,7 @@ const int servo = 9;  //Le servo est connecté à la PIN 9
 void setup() {
   myservo.attach(servo);
   pinMode(rouge, OUTPUT); // Défintion des entrées/sorties 
-  pinMode(verte, OUTPUT);
+  pinMode(verte, OUTPUT);// Configuration du port du verte comme une SORTIE 
   pinMode(trigPin, OUTPUT); // Configuration du port du Trigger comme une SORTIE 
   pinMode(echoPin, INPUT); // Configuration du port de l'Echo comme une ENTREE
   Serial.begin(9600);
@@ -25,13 +25,13 @@ void setup() {
 
 void loop() {
   // On initialise dés le début l'état des led
-  digitalWrite(rouge, HIGH);
-  digitalWrite(verte, LOW);
+  digitalWrite(rouge, HIGH);// led rouge allumer
+  digitalWrite(verte, LOW);//led verte éteinte
   
   digitalWrite(trigPin, HIGH); 
-  delayMicroseconds(10); 
+  delayMicroseconds(10); //attendre 10 ms 
   digitalWrite(trigPin, LOW); 
-  delayMicroseconds(10);
+  delayMicroseconds(5);//attendre 5 ms 
   // Écoute de l'écho 
   duree = pulseIn(echoPin, HIGH); 
   // Calcul de la distance 
@@ -43,20 +43,20 @@ void loop() {
   delay(500);
 
   
-  if (distance <=20) {    // si bouton appuyé, alors on lève la barrière et on fait changer l'état des led, sinon, on reboucle
+  if (distance <=20) {    // si distance inferieur ou égale à 20
     
     for (pos = 0; pos <= 90; pos += 1) { // on commence à actionner dans un sens la barrière, jusqu'à 90°, degrè par degrè
       myservo.write(pos);              // va à la position "POS"
       delay(15);                       // attends 15ms avant de changer la position de la barrière d'1 degrè
     }
     // la barrière est levée, on peut allumer la led verte et éteindre la rouge
-    digitalWrite(verte, HIGH);
-    digitalWrite(rouge, LOW);
+    digitalWrite(verte, HIGH);//led verte allumer
+    digitalWrite(rouge, LOW);//led rouge éteinte
 
     delay(5000); // Attends 5 secondes
     // La led rouge s'allume et on éteind la verte
-    digitalWrite(rouge, HIGH);
-    digitalWrite(verte, LOW);
+    digitalWrite(rouge, HIGH);//led rouge allumer
+    digitalWrite(verte, LOW);//led verte éteinte
     //On referme ensuite la barrière
     for (pos = 90; pos >= 0; pos -= 1) { // cette fois si, on passe de 90° à 0° (décroit à chaque fois de -1)
       myservo.write(pos);              // va à la position "POS"
